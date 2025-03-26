@@ -26,6 +26,20 @@
   .flex-between {
     @apply flex justify-between items-center;
   }
+
+  .logout-after::after {
+    content: "";
+    position: absolute;
+    bottom: -3;
+    right: 0;
+    width: 0;
+    height: 1px;
+    transition: all 0.2s;
+    @apply bg-red-500;
+  }
+  .logout-after:hover::after {
+    width: 100%;
+  }
 }
 
 /* animation */
