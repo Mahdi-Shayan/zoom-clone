@@ -15,7 +15,7 @@ function Links({ link }: { link: SidebarLinks }) {
     <Link
       href={link.route}
       className={cn(
-        "flex gap-3 py-3 px-4 max-md:p-3 rounded-md text-sky-300 text-lg",
+        "flex gap-3 py-3 px-4 max-lg:p-3 rounded-md text-sky-300 text-lg",
         isSelected && "bg-blue-100 text-white"
       )}
     >
@@ -25,7 +25,7 @@ function Links({ link }: { link: SidebarLinks }) {
         width={20}
         height={20}
       />
-      <p className="max-md:hidden">{link.label}</p>
+      <p className="max-lg:hidden">{link.label}</p>
     </Link>
   );
 }

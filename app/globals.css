@@ -40,6 +40,22 @@
   .logout-after:hover::after {
     width: 100%;
   }
+
+  .facilitie-card {
+    @apply flex flex-col justify-between rounded-2xl p-5 cursor-pointer;
+  }
+  .facilitie-card div:nth-child(1) {
+    @apply bg-white/5 w-[55px] h-[55px] max-lg:w-[47px] max-lg:h-[47px] rounded-lg flex justify-center items-center;
+  }
+  .facilitie-card div:nth-child(2) {
+    @apply space-y-0.5;
+  }
+  .facilitie-card p {
+    @apply xl:text-lg max-sm:text-sm text-sky-200;
+  }
+  .facilitie-card h3 {
+    @apply xl:text-2xl text-xl max-sm:text-[17px] font-bold;
+  }
 }
 
 /* animation */

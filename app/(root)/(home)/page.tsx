@@ -1,8 +1,40 @@
+import DigitalClock from "@/components/DigitalClock";
+import HomeFacilities from "@/components/HomeFacilities";
+import PageTitle from "@/components/PageTitle";
+import UpcomingCard from "@/components/UpcomingCard";
+import dayjs from "dayjs";
+import Link from "next/link";
 
 function Home() {
+  const today = dayjs().format("dddd ,MM MMMM YYYY");
+
   return (
-    <div className="dark:bg-sky-300 container mx-auto">
-      home
+    <div className="flex flex-col gap-8">
+      <section className="bg-hero flex flex-col justify-between p-8 bg-[url(/images/hero-background.png)] bg-no-repeat bg-cover bg-center h-[300px] rounded-2xl">
+        <p className="bg-white/5 w-max p-2 rounded-sm text-sky-50 max-md:text-sm">
+          Upcoming Meeting at: 12:30 PM
+        </p>
+        <div>
+          <DigitalClock />
+          <p className="lg:text-2xl md:text-xl text-sky-300 mt-2">
+            {today}
+          </p>
+        </div>
+      </section>
+
+      {/* Facilities */}
+      <HomeFacilities />
+      <section>
+        <div className="flex max-md:flex-col justify-between md:items-center w-full max-md:mb-6">
+          <PageTitle title="Today’s Upcoming Meetings" />
+          <Link href="/upcoming">See all</Link>
+        </div>
+        <div className="flex max-md:flex-col gap-3">
+          {Array(2).fill({}).map((_, ind) => (
+            <UpcomingCard key={ind} />
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

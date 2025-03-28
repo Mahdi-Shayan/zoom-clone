@@ -14,7 +14,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="relative bg-dark-200 text-white">{children}</body>
+      <body
+        className="relative bg-dark-400 text-white"
+      >
+        {children}
+      </body>
     </html>
   );
 }
