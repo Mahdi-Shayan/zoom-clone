@@ -3,7 +3,7 @@ import Link from "next/link";
 
 function HomeFacilities() {
   return (
-    <ul className="grid grid-cols-4 max-[1230px]:grid-cols-2 gap-3 h-[260px] max-[1230px]:h-[360px]">
+    <ul className="grid grid-cols-4 max-[1230px]:grid-cols-2 max-xs:grid-cols-1 gap-3 h-[260px] max-[1230px]:h-[360px] max-xs:h-[650px]">
       <li className="facilitie-card bg-orange-100">
         <div className="relative">
           <Image
@@ -46,7 +46,7 @@ function HomeFacilities() {
           <p>Plan your meeting</p>
         </div>
       </li>
-      <Link href='/recordings' className="facilitie-card bg-yellow-100">
+      <Link href="/recordings" className="facilitie-card bg-yellow-100">
         <div className="relative">
           <Image
             src="/icons/recordings.svg"

@@ -4,21 +4,17 @@ import Links from "./Links";
 
 function Sidebar() {
   return (
-    <div className="sticky top-0 bg-dark-300 w-[260px] max-lg:w-max h-screen">
-      <div className="p-5 max-lg:px-0">
+    <div
+      id="sidebar"
+      className="sticky top-0 bg-dark-300 w-[260px] h-screen max-lg:fixed max-lg:translate-x-[-100%] z-10"
+      style={{ transition: "all 0.3s" }}
+    >
+      <div className="p-5">
         <Image
           src="/icons/yoom-logo.svg"
           alt="logo"
           width={125}
           height={45}
-          className="max-lg:hidden"
-        />
-        <Image
-          src="/icons/logo.svg"
-          alt="logo"
-          width={40}
-          height={40}
-          className="lg:hidden mx-auto"
         />
       </div>
       <ul className="flex flex-col gap-3 mt-6 px-3">

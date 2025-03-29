@@ -27,13 +27,13 @@ function UpcomingCard() {
           fill="#ffffff"
         />
       </svg>
-      <h3 className="capitalize font-bold text-xl max-lg:text-lg">
+      <h3 className="capitalize font-bold text-lg">
         Team Sync: Sprint Planning & Updating
       </h3>
       <p className="text-sky-200 max-lg:text-sm">
         March 15, 2024 - 10:00 AM
       </p>
-      <div className="flex max-xl:flex-col max-md:flex-row max-sm:flex-col justify-between xl:items-center max-xl:gap-5 mt-5">
+      <div className="flex max-xl:flex-col max-md:flex-row max-sm:flex-col justify-between xl:items-center max-xl:gap-7 mt-5">
         <div className="flex space-x-[-15px]">
           {avatarImages.slice(0, 4).map((img, ind) => (
             <Image

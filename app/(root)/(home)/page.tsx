@@ -10,13 +10,13 @@ function Home() {
 
   return (
     <div className="flex flex-col gap-8">
-      <section className="bg-hero flex flex-col justify-between p-8 bg-[url(/images/hero-background.png)] bg-no-repeat bg-cover bg-center h-[300px] rounded-2xl">
-        <p className="bg-white/5 w-max p-2 rounded-sm text-sky-50 max-md:text-sm">
+      <section className="bg-hero flex flex-col justify-between p-8 bg-[url(/images/hero-background.png)] bg-no-repeat bg-cover bg-center h-[300px] rounded-2xl max-xs:h-55">
+        <p className="bg-white/5 w-max p-2 rounded-sm text-sky-50 max-md:text-sm max-xs:!text-[13px]">
           Upcoming Meeting at: 12:30 PM
         </p>
         <div>
           <DigitalClock />
-          <p className="lg:text-2xl md:text-xl text-sky-300 mt-2">
+          <p className="lg:text-2xl md:text-xl max-xs:text-sm text-sky-300 mt-2">
             {today}
           </p>
         </div>
@@ -30,9 +30,11 @@ function Home() {
           <Link href="/upcoming">See all</Link>
         </div>
         <div className="flex max-md:flex-col gap-3">
-          {Array(2).fill({}).map((_, ind) => (
-            <UpcomingCard key={ind} />
-          ))}
+          {Array(2)
+            .fill({})
+            .map((_, ind) => (
+              <UpcomingCard key={ind} />
+            ))}
         </div>
       </section>
     </div>

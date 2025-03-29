@@ -11,7 +11,7 @@ function DigitalClock() {
       <LiveClock
         format="hh:mm"
         ticking={true}
-        className="lg:text-7xl md:text-6xl text-5xl font-bold"
+        className="lg:text-7xl md:text-6xl max-xs:text-[40px] text-5xl font-bold"
       />
       <LiveClock format="A" className="lg:text-2xl text-lg ml-3" />
     </>
