@@ -58,6 +58,47 @@
   }
 }
 
+/* ==== clerk class override ===== */
+
+.cl-logoImage {
+  @apply w-30 h-11;
+}
+.cl-socialButtonsBlockButton {
+  @apply p-2;
+}
+.cl-internal-16vtwdp,
+.cl-headerTitle {
+  @apply hidden;
+}
+.cl-formButtonPrimary {
+  @apply bg-blue-100 !shadow-none p-2 hover:bg-blue-100/75 text-white;
+}
+.cl-footerActionText {
+  @apply text-white;
+}
+.cl-formFieldInput {
+  @apply p-2 bg-transparent;
+}
+.cl-footerActionLink {
+  @apply text-blue-100 hover:text-sky-300;
+}
+.cl-card,
+.cl-footer {
+  background: #1c1f2e;
+  color: white;
+}
+.cl-internal-piyvrh {
+  background: none;
+}
+.cl-avatarBox {
+  @apply md:w-9 md:h-9;
+}
+.cl-userButtonOuterIdentifier {
+  @apply md:text-[15px];
+}
+
+/* =============================== */
+
 /* animation */
 
 .show-block {

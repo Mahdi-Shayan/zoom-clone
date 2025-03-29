@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 
 export const metadata: Metadata = {
   icons: "/icons/logo.svg",
@@ -14,11 +16,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className="relative bg-dark-400 text-white"
+      <ClerkProvider
+        appearance={{
+          baseTheme: dark,
+          layout: { logoImageUrl: "/icons/yoom-logo.svg" },
+        }}
       >
-        {children}
-      </body>
+        <body className="relative bg-dark-400 text-white">{children}</body>
+      </ClerkProvider>
     </html>
   );
 }
