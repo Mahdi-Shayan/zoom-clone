@@ -1,5 +1,5 @@
 import DigitalClock from "@/components/DigitalClock";
-import HomeFacilities from "@/components/HomeFacilities";
+import HomeFacilities from "@/components/HomeFacilitiesList";
 import PageTitle from "@/components/PageTitle";
 import UpcomingCard from "@/components/UpcomingCard";
 import dayjs from "dayjs";
@@ -21,7 +21,6 @@ function Home() {
           </p>
         </div>
       </section>
-
       {/* Facilities */}
       <HomeFacilities />
       <section>
