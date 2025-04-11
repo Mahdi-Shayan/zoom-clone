@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import "@stream-io/video-react-sdk/dist/css/styles.css";
 
 export const metadata: Metadata = {
   icons: "/icons/logo.svg",

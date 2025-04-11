@@ -13,8 +13,14 @@ export async function tokenProvider() {
   if (!apiKey) throw new Error("No API key");
   if (!apiSecret) throw new Error("No API secret");
 
+  // تنظیم iat برای 5 ثانیه قبل‌تر از زمان فعلی
+  const issuedAt = Math.floor(Date.now() / 1000) - 5;
+
   const client = new StreamClient(apiKey, apiSecret);
-  const token = client.generateUserToken({ user_id: user.id });
+  const token = client.generateUserToken({
+    user_id: user.id,
+    iat: issuedAt,
+  });
 
   return token;
 }
