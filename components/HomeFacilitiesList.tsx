@@ -5,7 +5,7 @@ import HomeFacility from "./HomeFacility";
 import { useState } from "react";
 import MeetingModal from "./MeetingModal";
 import { useUser } from "@clerk/nextjs";
-import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk";
+import { Call, CallingState, useCallStateHooks, useStreamVideoClient } from "@stream-io/video-react-sdk";
 import { Input } from "./ui/input";
 import { toast } from "sonner";
 import DatePicker from "react-datepicker";
@@ -29,9 +29,11 @@ function HomeFacilities() {
   const [isEmptyInput, setIsEmptyInput] = useState<boolean>(true);
 
   const [callDetails, setCallDetails] = useState<Call>();
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const createMeeting = async () => {
     if (!user || !client) return;
+    setIsLoading(true)
 
     try {
       if (!meetingDetails.dateTime) {
@@ -64,6 +66,7 @@ function HomeFacilities() {
         router.push(`/meeting/${call.id}`);
 
       setIsEmptyInput(true);
+      setIsLoading(false)
 
       toast.success("Meeting created");
     } catch (error) {
@@ -173,6 +176,7 @@ function HomeFacilities() {
           buttonIcon="/icons/copy.svg"
           className="text-center"
           buttonText="Copy Meeting Link"
+          
         />
       )}
 
@@ -208,6 +212,7 @@ function HomeFacilities() {
         handleClick={() => {
           createMeeting();
         }}
+        isLoading={isLoading}
       />
     </section>
   );
