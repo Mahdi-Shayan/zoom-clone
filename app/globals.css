@@ -16,7 +16,7 @@
   --color-yellow-100: #f9a90e;
   --color-purple-100: #830ef9;
   --container-2xl: 1400px;
-  --breakpoint-xs: 500px
+  --breakpoint-xs: 500px;
 }
 
 @layer utilities {
@@ -57,6 +57,15 @@
   .facilitie-card h3 {
     @apply text-xl max-sm:text-[17px] font-bold;
   }
+
+  .control-btn {
+    @apply flex justify-center items-center bg-dark-300 hover:bg-white/20 w-12 h-12 rounded-full;
+  }
+}
+
+.str-video__menu-container,
+.str-video__device-settings {
+  @apply !bg-dark-300 !font-sans;
 }
 
 /* ==== clerk class override ===== */
@@ -96,6 +105,27 @@
 }
 .cl-userButtonOuterIdentifier {
   @apply md:text-[15px];
+}
+
+/* =============================== */
+
+/* stream layout grid, controlls and some override */
+
+.str-video__paginated-grid-layout__group {
+  @apply !grid grid-cols-[repeat(auto-fit,_minmax(235px,1fr))] !gap-3;
+}
+.str-video__speaker-layout__spotlight {
+  @apply max-xs:!h-[55%] !h-auto;
+}
+.str-video__participant-listing,
+.str-video__participant-list {
+  overflow: hidden;
+}
+.str-video__search-input__container {
+  @apply w-[97%] !mx-auto !bg-dark-400;
+}
+.str-video__call-controls {
+  @apply max-sm:!gap-3
 }
 
 /* =============================== */
