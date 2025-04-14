@@ -7,7 +7,7 @@ function Upcoming() {
     <div className="h-full flex flex-col">
       <PageTitle title='Upcoming Meetings'/>
       <section className="h-full">
-        <CallsList />
+        <CallsList type="upcoming" isPage={true} />
       </section>
     </div>
   )

@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 
 function HomeLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="relative flex">
+    <div className="relative flex min-h-screen">
       <Sidebar />
       <Burger />
       <div

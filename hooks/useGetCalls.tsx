@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 export function useGetUpcomingCalls(limit?: number) {
   const [upcomingCalls, setUpcomingCalls] = useState<Call[]>();
+  const [previousCalls, setPreviousCalls] = useState<Call[]>();
   const [isCallLoading, setIsCallLoading] = useState<boolean>(true);
 
   const client = useStreamVideoClient();
@@ -30,9 +31,26 @@ export function useGetUpcomingCalls(limit?: number) {
       setUpcomingCalls(calls);
       setIsCallLoading(false);
     };
+    const previousCalls = async () => {
+      const { calls } = await client.queryCalls({
+        filter_conditions: {
+          $and: [
+            { ended_at: { $exists: true } },
+            { starts_at: { $lte: pastTime } },
+          ],
+        },
+        sort: [{ field: "starts_at", direction: -1 }],
+        watch: true,
+        limit: 10,
+      });
 
+      setPreviousCalls(calls);
+      setIsCallLoading(false);
+    };
+
+    previousCalls();
     upcomingCalls();
   }, [client]);
 
-  return { upcomingCalls, isCallLoading };
+  return { upcomingCalls, previousCalls, isCallLoading };
 }

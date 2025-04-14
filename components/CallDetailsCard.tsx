@@ -6,9 +6,10 @@ interface Props {
   description: string;
   date: string;
   callId: string;
+  type: "previous" | "upcoming";
 }
 
-function CallDetailsCard({description, date, callId}: Props) {
+function CallDetailsCard({ description, date, callId, type }: Props) {
   return (
     <div className="flex-1 flex flex-col gap-4 bg-dark-300 p-5 rounded-xl">
       <svg
@@ -33,12 +34,8 @@ function CallDetailsCard({description, date, callId}: Props) {
           fill="#ffffff"
         />
       </svg>
-      <h3 className="capitalize font-bold text-lg">
-        {description}
-      </h3>
-      <p className="text-sky-200 max-lg:text-sm">
-        {date}
-      </p>
+      <h3 className="capitalize font-bold text-lg">{description}</h3>
+      <p className="text-sky-200 max-lg:text-sm">{date}</p>
       <div className="flex max-xl:flex-col max-md:flex-row max-sm:flex-col justify-between xl:items-center max-xl:gap-7 mt-5">
         <div className="flex space-x-[-15px]">
           {avatarImages.slice(0, 4).map((img, ind) => (
@@ -57,7 +54,7 @@ function CallDetailsCard({description, date, callId}: Props) {
             </div>
           )}
         </div>
-        <UpcomingCardActions callId={callId}/>
+        {type === "upcoming" && <UpcomingCardActions callId={callId} />}
       </div>
     </div>
   );
