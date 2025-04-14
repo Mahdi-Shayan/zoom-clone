@@ -1,7 +1,8 @@
 import DigitalClock from "@/components/DigitalClock";
 import HomeFacilities from "@/components/HomeFacilitiesList";
 import PageTitle from "@/components/PageTitle";
-import UpcomingCard from "@/components/UpcomingCard";
+import UpcomingCard from "@/components/CallDetailsCard";
+import UpcomingList from "@/components/CallsList";
 import dayjs from "dayjs";
 import Link from "next/link";
 
@@ -28,12 +29,8 @@ function Home() {
           <PageTitle title="Today’s Upcoming Meetings" />
           <Link href="/upcoming">See all</Link>
         </div>
-        <div className="flex max-md:flex-col gap-3">
-          {Array(2)
-            .fill({})
-            .map((_, ind) => (
-              <UpcomingCard key={ind} />
-            ))}
+        <div className="w-full">
+          <UpcomingList limit={2} />
         </div>
       </section>
     </div>

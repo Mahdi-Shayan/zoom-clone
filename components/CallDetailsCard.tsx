@@ -1,8 +1,14 @@
 import { avatarImages } from "@/constanst";
 import Image from "next/image";
-import { Button } from "./ui/button";
+import UpcomingCardActions from "./UpcomingCardActions";
 
-function UpcomingCard() {
+interface Props {
+  description: string;
+  date: string;
+  callId: string;
+}
+
+function CallDetailsCard({description, date, callId}: Props) {
   return (
     <div className="flex-1 flex flex-col gap-4 bg-dark-300 p-5 rounded-xl">
       <svg
@@ -28,10 +34,10 @@ function UpcomingCard() {
         />
       </svg>
       <h3 className="capitalize font-bold text-lg">
-        Team Sync: Sprint Planning & Updating
+        {description}
       </h3>
       <p className="text-sky-200 max-lg:text-sm">
-        March 15, 2024 - 10:00 AM
+        {date}
       </p>
       <div className="flex max-xl:flex-col max-md:flex-row max-sm:flex-col justify-between xl:items-center max-xl:gap-7 mt-5">
         <div className="flex space-x-[-15px]">
@@ -51,16 +57,10 @@ function UpcomingCard() {
             </div>
           )}
         </div>
-        <div className="flex gap-3">
-          <Button className="bg-blue-100 hover:bg-blue-100/70">Start</Button>
-          <Button className="bg-dark-200 hover:bg-dark-200/70">
-            <Image src="/icons/copy.svg" alt="copy icon" width={14} height={14}/>
-            Copy Invitation
-          </Button>
-        </div>
+        <UpcomingCardActions callId={callId}/>
       </div>
     </div>
   );
 }
 
-export default UpcomingCard;
+export default CallDetailsCard;

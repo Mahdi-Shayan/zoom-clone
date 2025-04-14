@@ -1,8 +1,15 @@
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 
-const Loader = ({ size = 50 }: { size?: number }) => {
+const Loader = ({
+  size = 50,
+  className = "h-screen",
+}: {
+  size?: number;
+  className?: string;
+}) => {
   return (
-    <div className="flex-center h-screen w-full">
+    <div className={cn("flex-center w-full", className)}>
       <Image
         src="/icons/loading-circle.svg"
         alt="loading"

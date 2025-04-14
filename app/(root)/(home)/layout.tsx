@@ -14,7 +14,7 @@ function HomeLayout({ children }: { children: ReactNode }) {
         style={{ transition: "filter 0.3s" }}
       >
         <Navbar />
-        <section className="min-h-screen flex-1 flex-col p-10 max-md:px-6 max-md:pb-14">
+        <section className="h-screen flex-1 flex-col p-10 max-md:px-6 max-md:pb-14">
           <div className="w-full h-full">{children}</div>
         </section>
       </div>
