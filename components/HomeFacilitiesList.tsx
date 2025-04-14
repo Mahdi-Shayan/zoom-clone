@@ -5,18 +5,18 @@ import HomeFacility from "./HomeFacility";
 import { useState } from "react";
 import MeetingModal from "./MeetingModal";
 import { useUser } from "@clerk/nextjs";
-import { Call, CallingState, useCallStateHooks, useStreamVideoClient } from "@stream-io/video-react-sdk";
+import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk";
 import { Input } from "./ui/input";
 import { toast } from "sonner";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Textarea } from "./ui/textarea";
 import Loader from "./Loader";
+import { useGetCallById } from "@/hooks/useGetCallById";
 
 type Facility = "new" | "join" | "schedule" | undefined;
 
 function HomeFacilities() {
-
   const router = useRouter();
   const [meetingState, setMeetingState] = useState<Facility>();
   const { user } = useUser();
@@ -28,12 +28,15 @@ function HomeFacilities() {
   });
   const [isEmptyInput, setIsEmptyInput] = useState<boolean>(true);
 
+  const [_, callId] = meetingDetails.link.split("meeting/");
+  const { call } = useGetCallById(callId);
+
   const [callDetails, setCallDetails] = useState<Call>();
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const createMeeting = async () => {
     if (!user || !client) return;
-    setIsLoading(true)
+    setIsLoading(true);
 
     try {
       if (!meetingDetails.dateTime) {
@@ -52,6 +55,7 @@ function HomeFacilities() {
       const { description } = meetingDetails || "Instant meeting";
 
       await call.getOrCreate({
+        notify: true,
         data: {
           starts_at: startsAt,
           custom: {
@@ -66,7 +70,7 @@ function HomeFacilities() {
         router.push(`/meeting/${call.id}`);
 
       setIsEmptyInput(true);
-      setIsLoading(false)
+      setIsLoading(false);
 
       toast.success("Meeting created");
     } catch (error) {
@@ -153,6 +157,14 @@ function HomeFacilities() {
               onChange={(date) =>
                 setMeetingDetails({ ...meetingDetails, dateTime: date! })
               }
+              filterDate={(date) => {
+                const today = new Date(Date.now());
+                return date >= today;
+              }}
+              filterTime={(time) => {
+                const currentTime = new Date(Date.now());
+                return time >= currentTime;
+              }}
               // showIcon
               showTimeSelect
               timeFormat="HH:mm"
@@ -176,19 +188,28 @@ function HomeFacilities() {
           buttonIcon="/icons/copy.svg"
           className="text-center"
           buttonText="Copy Meeting Link"
-          
         />
       )}
 
       <MeetingModal
         isOpen={meetingState === "join"}
         onClose={() => setMeetingState(undefined)}
-        title="Type the link here"
+        title="Paste the link here"
         className="text-center"
         buttonText="Join Meeting"
         handleClick={() => {
+          const now = new Date();
+          const meetingStart = new Date(meetingDetails.dateTime);
           if (isEmptyInput) {
             toast.error("Please paste the room's link");
+            return;
+          }
+          if (!call) {
+            toast.error("No room exists");
+            return;
+          }
+          if (meetingStart > now) {
+            toast.error("The meeting has not started yet");
             return;
           }
           router.push(meetingDetails.link);
