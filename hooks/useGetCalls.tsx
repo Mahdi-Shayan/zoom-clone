@@ -1,56 +1,60 @@
-"use client";
-
-import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk";
 import { useEffect, useState } from "react";
+import { useUser } from "@clerk/nextjs";
+import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk";
+import { toast } from "sonner";
 
-export function useGetUpcomingCalls(limit?: number) {
-  const [upcomingCalls, setUpcomingCalls] = useState<Call[]>();
-  const [previousCalls, setPreviousCalls] = useState<Call[]>();
-  const [isCallLoading, setIsCallLoading] = useState<boolean>(true);
-
+export const useGetCalls = () => {
+  const { user } = useUser();
   const client = useStreamVideoClient();
+  const [calls, setCalls] = useState<Call[]>();
+  const [isCallLoading, setIsCallLoading] = useState(false);
 
   useEffect(() => {
-    if (!client) return;
-    const bufferMinutes = 15;
-    const pastTime = new Date(Date.now() - bufferMinutes * 60 * 1000);
+    const loadCalls = async () => {
+      if (!client || !user?.id) return;
 
-    const upcomingCalls = async () => {
-      const { calls } = await client.queryCalls({
-        filter_conditions: {
-          $and: [
-            { ended_at: { $exists: false } },
-            { starts_at: { $gt: pastTime } },
-          ],
-        },
-        sort: [{ field: "starts_at", direction: -1 }],
-        watch: true,
-        limit,
-      });
+      setIsCallLoading(true);
 
-      setUpcomingCalls(calls);
-      setIsCallLoading(false);
-    };
-    const previousCalls = async () => {
-      const { calls } = await client.queryCalls({
-        filter_conditions: {
-          $and: [
-            { ended_at: { $exists: true } },
-            { starts_at: { $lte: pastTime } },
-          ],
-        },
-        sort: [{ field: "starts_at", direction: -1 }],
-        watch: true,
-        limit: 10,
-      });
+      try {
+        const { calls } = await client.queryCalls({
+          sort: [{ field: "starts_at", direction: -1 }],
+          filter_conditions: {
+            starts_at: { $exists: true },
+            $or: [
+              { created_by_user_id: user.id },
+              { members: { $in: [user.id] } },
+            ],
+          },
+        });
 
-      setPreviousCalls(calls);
-      setIsCallLoading(false);
+        setCalls(calls);
+      } catch (error) {
+        console.error(error);
+        toast.error('Try again later.')
+      } finally {
+        setIsCallLoading(false);
+      }
     };
 
-    previousCalls();
-    upcomingCalls();
-  }, [client]);
+    loadCalls();
+  }, [client, user?.id]);
 
-  return { upcomingCalls, previousCalls, isCallLoading };
-}
+  const now = new Date();
+
+  const previousCalls = calls?.filter(
+    ({ state: { startsAt, endedAt } }: Call) => {
+      return (startsAt && new Date(startsAt) < now) || !!endedAt;
+    }
+  );
+
+  const upcomingCalls = calls?.filter(({ state: { startsAt } }: Call) => {
+    return startsAt && new Date(startsAt) > now;
+  });
+
+  return {
+    previousCalls,
+    upcomingCalls,
+    callRecordings: calls,
+    isCallLoading,
+  };
+};

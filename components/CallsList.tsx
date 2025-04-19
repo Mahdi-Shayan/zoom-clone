@@ -1,20 +1,18 @@
 "use client";
 
-import { useGetUpcomingCalls } from "@/hooks/useGetCalls";
+import { useGetCalls } from "@/hooks/useGetCalls";
 import Loader from "./Loader";
 import CallDetailsCard from "./CallDetailsCard";
 import dayjs from "dayjs";
 import { cn } from "@/lib/utils";
 
 interface Props {
-  limit?: number;
   isPage?: boolean;
   type: "previous" | "upcoming";
 }
 
-function CallsList({ limit, isPage = false, type }: Props) {
-  const { upcomingCalls, previousCalls, isCallLoading } =
-    useGetUpcomingCalls(limit && limit);
+function CallsList({ isPage = false, type }: Props) {
+  const { upcomingCalls, previousCalls, isCallLoading } = useGetCalls();
 
   if (isCallLoading) return <Loader className="h-full" />;
 
@@ -41,27 +39,36 @@ function CallsList({ limit, isPage = false, type }: Props) {
       </h3>
     );
 
+  function getCall() {
+    switch (type) {
+      case "upcoming":
+        return upcomingCalls;
+        break;
+      case "previous":
+        return previousCalls;
+        break;
+    }
+  }
+
   return (
     <div className="grid grid-cols-2 gap-5 max-md:grid-cols-1">
-      {(type === "upcoming" ? upcomingCalls : previousCalls)?.map(
-        (call) => {
-          const description = call.state.custom.description;
-          const date = dayjs(call.state.startsAt as Date).format(
-            "DD MMMM, YYYY - HH:MM A"
-          );
+      {getCall()?.map((call) => {
+        const description = call.state.custom.description;
+        const date = dayjs(call.state.startsAt as Date).format(
+          "DD MMMM, YYYY - HH:MM A"
+        );
 
-          return (
-            <div key={call.id}>
-              <CallDetailsCard
-                description={description}
-                date={date}
-                callId={call.id}
-                type={type}
-              />
-            </div>
-          );
-        }
-      )}
+        return (
+          <div key={call.id}>
+            <CallDetailsCard
+              description={description || "Personal room"}
+              date={date}
+              callId={call.id}
+              type={type}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }

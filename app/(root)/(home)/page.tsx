@@ -1,10 +1,9 @@
 import DigitalClock from "@/components/DigitalClock";
 import HomeFacilities from "@/components/HomeFacilitiesList";
 import PageTitle from "@/components/PageTitle";
-import UpcomingCard from "@/components/CallDetailsCard";
-import UpcomingList from "@/components/CallsList";
 import dayjs from "dayjs";
 import Link from "next/link";
+import CallsList from "@/components/CallsList";
 
 function Home() {
   const today = dayjs().format("dddd ,MM MMMM YYYY");
@@ -30,7 +29,7 @@ function Home() {
           <Link href="/upcoming">See all</Link>
         </div>
         <div className="w-full">
-          <UpcomingList limit={2} />
+          <CallsList type="upcoming"  limit={2} />
         </div>
       </section>
     </div>
