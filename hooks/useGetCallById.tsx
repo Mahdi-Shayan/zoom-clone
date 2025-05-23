@@ -1,11 +1,12 @@
-"use client"
+"use client";
 
 import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
-export function useGetCallById(id: string | string[]) {
+export const useGetCallById = (id: string | string[]) => {
   const [call, setCall] = useState<Call>();
-  const [isCallLoading, setIsCallLoading] = useState<boolean>(true);
+  const [isCallLoading, setIsCallLoading] = useState(true);
 
   const client = useStreamVideoClient();
 
@@ -13,19 +14,27 @@ export function useGetCallById(id: string | string[]) {
     if (!client) return;
 
     const loadCall = async () => {
-      const { calls } = await client.queryCalls({
-        filter_conditions: {
-          id,
-        },
-      });
+      try {
+        const { calls } = await client.queryCalls({
+          filter_conditions: { id },
+        });
 
-      setCall(calls[0]);
-      setIsCallLoading(false);
+        if (calls.length > 0) setCall(calls[0]);
+
+        setIsCallLoading(false);
+      } catch (error) {
+        console.error(error);
+        if (error instanceof Error) {
+          toast.error(error.message);
+        }
+        toast.error("Failed to load call please try again later!");
+      } finally {
+        setIsCallLoading(false);
+      }
     };
 
     loadCall();
-
   }, [client, id]);
 
   return { call, isCallLoading };
-}
+};

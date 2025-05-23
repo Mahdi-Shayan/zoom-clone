@@ -84,7 +84,7 @@ function MeetingRoom() {
   return (
     <section className="relative h-screen w-full pt-4 text-white overflow-hidden">
       <div className="relative flex justify-center items-center size-full">
-        <div className="flex size-full max-w-[90%] max-lg:mb-30 mb-15 pt-10">
+        <div className="flex size-full w-[90%] max-w-[1200px] max-lg:mb-30 mb-15 pt-10">
           <CamLayout />
         </div>
 
