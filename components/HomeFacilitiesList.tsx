@@ -28,7 +28,7 @@ function HomeFacilities() {
   });
   const [isEmptyInput, setIsEmptyInput] = useState<boolean>(true);
 
-  const [_, callId] = meetingDetails.link.split("meeting/");
+  const [callId] = meetingDetails.link.split("meeting/");
   const { call } = useGetCallById(callId);
 
   const [callDetails, setCallDetails] = useState<Call>();
@@ -74,7 +74,10 @@ function HomeFacilities() {
 
       toast.success("Meeting created");
     } catch (error) {
-      toast.error("Faild to create meeting");
+      if(error instanceof Error) {
+        toast.error(error.message || "Faild to create meeting");
+      }
+      toast.error("Unknown error uccurred");
     }
   };
 

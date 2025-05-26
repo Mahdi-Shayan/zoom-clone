@@ -16,7 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useEffect, useState } from "react";
-import { LayoutList, MoreVertical, Users } from "lucide-react";
+import { LayoutList, Users } from "lucide-react";
 import { Button } from "./ui/button";
 import EndCallBtn from "./EndCallBtn";
 import Loader from "./Loader";

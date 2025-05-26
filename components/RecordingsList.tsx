@@ -49,6 +49,7 @@ function RecordingsList() {
         setRecordings(recordings);
       } catch (error) {
         toast.error("Try again later.");
+        console.error(error)
       }
     };
 

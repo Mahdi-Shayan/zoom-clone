@@ -1,20 +1,20 @@
 "use client";
-import dynamic from "next/dynamic";
-
-const LiveClock = dynamic(() => import("react-live-clock"), {
-  ssr: false,
-});
+import { useState, useEffect } from "react";
 
 function DigitalClock() {
+  const [time, setTime] = useState(new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => setTime(new Date()), 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const timeString = time.toLocaleTimeString("en-GB");
+
   return (
-    <>
-      <LiveClock
-        format="hh:mm"
-        ticking={true}
-        className="lg:text-7xl md:text-6xl max-xs:text-[40px] text-5xl font-bold"
-      />
-      <LiveClock format="A" className="lg:text-2xl text-lg ml-3" />
-    </>
+    <div className="lg:text-6xl md:text-6xl max-xs:text-[40px] text-5xl font-bold">
+      {timeString}
+    </div>
   );
 }
 

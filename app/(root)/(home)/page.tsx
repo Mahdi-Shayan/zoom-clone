@@ -29,7 +29,7 @@ function Home() {
           <Link href="/upcoming">See all</Link>
         </div>
         <div className="w-full">
-          <CallsList type="upcoming"  limit={2} />
+          <CallsList type="upcoming" />
         </div>
       </section>
     </div>
